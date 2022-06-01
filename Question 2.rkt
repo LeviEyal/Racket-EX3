@@ -57,7 +57,7 @@ assignmnet we wrote the BNF for.
     [(list 'cons l r)    (Cons (parse-sexprLE l) (parse-sexpr->LIST r))]
     [else                (error 'parsesexprLE "bad syntax in ~s" sexpr)])) 
 
-;; parses a string containing a LE expression to a LE AST 
+;; parses a string containing an LE expression to an LE AST 
 (: parseLE : String -> LE)
 (define (parseLE str) 
   (parse-sexprLE (string->sexpr str)))
@@ -92,7 +92,7 @@ eval({append E ...}) = if eval(E) = (list E') for all expressions E
         [(NumT n) n]
         [(Sym s) s])))
 
-;; evaluates LE expressions by reducing them to lists
+;; evaluates LE expressions by reducing them to lists (see example in the first test)
 (: eval-append-args : (Listof LE) -> (Listof (Listof Any)))  
 (define (eval-append-args exprs) 
   (if (null? exprs) 
@@ -102,7 +102,7 @@ eval({append E ...}) = if eval(E) = (list E') for all expressions E
             (cons fst-val (eval-append-args (rest exprs))) 
             (error 'evalLE "append argument: expected List got ~s" fst-val)))))
 
-;; evaluate a WAE program contained in a string 
+;; evaluate an LE program contained in a string 
 (: runLE : String -> Any) 
 (define (runLE str) 
   (evalLE (parseLE str)))
